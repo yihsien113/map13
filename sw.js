@@ -1,6 +1,6 @@
 // Version: 1.0
 // 需要更新時修改下方版本字串即可自動清除舊快取
-const CACHE_NAME = 'draw-and-guess-pwa-v1.0';
+const CACHE_NAME = 'draw-and-guess-pwa-v1.1';
 
 // 獨立遊戲核心檔案清單
 const CORE_ASSETS = [

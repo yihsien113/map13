@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-  <link rel="apple-touch-icon" href="assets/icon.png">
+  <link rel="apple-touch-icon" href="icon.png">
   <link rel="manifest" href="manifest.json">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -457,7 +457,7 @@
     <div class="phase-banner" id="phaseBanner">準備開始</div>
     <div id="hud">🎨 <span id="roundDisplay">1/4</span></div>
 
-    <!-- 開始畫面（已移除離開按鈕） -->
+    <!-- 開始畫面 -->
     <div id="start-screen" class="overlay" style="display: none;">
       <div class="intro-copy">
         <h1 class="zh-text" style="display: block; font-size: 60px; margin: 0 0 28px; text-shadow: 0 4px 10px rgba(0,0,0,0.8); color: #fff;">
@@ -487,7 +487,7 @@
       </button>
     </div>
 
-    <!-- 結算畫面（無計分機制，僅保留再玩一次） -->
+    <!-- 結算畫面 -->
     <div id="result-screen" class="overlay" style="display: none;">
       <div style="font-size: 80px; margin-bottom: 12px;">🎉🎨👏</div>
       <h1 class="zh-text" style="font-size: 48px; color: #ffeb3b; margin: 0 0 30px 0;">
@@ -573,9 +573,8 @@
       });
     }
 
-    // 擴充至 90 個兒童友善題庫（附注音與 Emoji）
+    // 90 個兒童友善題庫（附注音與 Emoji）
     const WORD_BANK = [
-      // 原有 30 題
       { word: '太陽', emoji: '☀️', ruby: '<ruby>太<rt>ㄊㄞˋ</rt></ruby><ruby>陽<rt>ㄧㄤˊ</rt></ruby>' },
       { word: '蘋果', emoji: '🍎', ruby: '<ruby>蘋<rt>ㄆㄧㄥˊ</rt></ruby><ruby>果<rt>ㄍㄨㄛˇ</rt></ruby>' },
       { word: '愛心', emoji: '❤️', ruby: '<ruby>愛<rt>ㄞˋ</rt></ruby><ruby>心<rt>ㄒㄧㄣ</rt></ruby>' },
@@ -606,8 +605,6 @@
       { word: '雲朵', emoji: '☁️', ruby: '<ruby>雲<rt>ㄩㄣˊ</rt></ruby><ruby>朵<rt>ㄉㄨㄛˇ</rt></ruby>' },
       { word: '冰淇淋', emoji: '🍦', ruby: '<ruby>冰<rt>ㄅㄧㄥ</rt></ruby><ruby>淇<rt>ㄑㄧˊ</rt></ruby><ruby>淋<rt>ㄌㄧㄣˊ</rt></ruby>' },
       { word: '棒棒糖', emoji: '🍭', ruby: '<ruby>棒<rt>ㄅㄤˋ</rt></ruby><ruby>棒<rt>ㄅㄤˋ</rt></ruby><ruby>糖<rt>ㄊㄤˊ</rt></ruby>' },
-
-      // 新增 60 題（水果、食物、動物、交通工具、日常用品、自然）
       { word: '葡萄', emoji: '🍇', ruby: '<ruby>葡<rt>ㄆㄨˊ</rt></ruby><ruby>萄<rt>ㄊㄠˊ</rt></ruby>' },
       { word: '鳳梨', emoji: '🍍', ruby: '<ruby>鳳<rt>ㄈㄥˋ</rt></ruby><ruby>梨<rt>ㄌㄧˊ</rt></ruby>' },
       { word: '橘子', emoji: '🍊', ruby: '<ruby>橘<rt>ㄐㄩˊ</rt></ruby><ruby>子<rt>˙ㄗ</rt></ruby>' },
@@ -686,7 +683,6 @@
     const TOTAL_ROUNDS = 4;
     const USED_WORDS_STORAGE_KEY = 'drawGuess_usedWords_v1';
 
-    // 回合題號注音對照
     const ROUND_RUBY_NUMS = [
       '<ruby>一<rt>ㄧ</rt></ruby>',
       '<ruby>二<rt>ㄦˋ</rt></ruby>',
@@ -764,10 +760,6 @@
       return a;
     }
 
-    /**
-     * 不重複抽題機制：
-     * 記錄已使用過的題目，直到題庫所有題目皆出場過一輪後，才會重置並開啟新一輪循環。
-     */
     function drawUniqueQuestions(count) {
       let usedWords = [];
       try {
@@ -777,7 +769,6 @@
         usedWords = [];
       }
 
-      // 過濾出尚未出現過的題目
       let available = WORD_BANK.filter(item => !usedWords.includes(item.word));
       let selected = [];
 
@@ -785,14 +776,12 @@
         selected = shuffle(available).slice(0, count);
         usedWords.push(...selected.map(item => item.word));
       } else {
-        // 剩餘題目不足本局所需：先把剩下的全數取出，再重置題庫補足差額
         selected = [...available];
         const needed = count - selected.length;
         const currentWords = selected.map(item => item.word);
         const freshPool = shuffle(WORD_BANK.filter(item => !currentWords.includes(item.word)));
         const extra = freshPool.slice(0, needed);
         selected = shuffle([...selected, ...extra]);
-        // 新一輪循環只記錄剛從新池子抽出的題目
         usedWords = extra.map(item => item.word);
       }
 
@@ -869,11 +858,12 @@
       });
     }
 
-    function resizeCanvas() {
+    // preserve = true 時保留畫布內容（用於螢幕旋轉/縮放），false 時直接清空
+    function resizeCanvas(preserve = true) {
       const rect = canvas.getBoundingClientRect();
       if (rect.width === 0 || rect.height === 0) return;
       const dpr = window.devicePixelRatio || 1;
-      const prev = canvas.width > 0 ? canvas.toDataURL() : null;
+      const prev = (preserve && canvas.width > 0) ? canvas.toDataURL() : null;
 
       canvas.width = rect.width * dpr;
       canvas.height = rect.height * dpr;
@@ -948,7 +938,8 @@
       document.getElementById('hud').style.display = 'block';
       document.getElementById('phaseBanner').style.display = 'block';
 
-      resizeCanvas();
+      // 傳入 false，避免把上一局最後一題的畫作還原回來
+      resizeCanvas(false);
       updateHUD();
       prepareRound();
     }
@@ -1137,11 +1128,11 @@
       document.getElementById('loading-screen').style.display = 'none';
       document.getElementById('game-container').style.display = 'flex';
       document.getElementById('start-screen').style.display = 'flex';
-      resizeCanvas();
+      resizeCanvas(false);
     });
 
     window.addEventListener('resize', () => {
-      resizeCanvas();
+      resizeCanvas(true);
     });
   </script>
 </body>
