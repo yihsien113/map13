@@ -1,0 +1,22 @@
+{
+  "name": "你畫我猜",
+  "short_name": "你畫我猜",
+  "description": "雙人輪流畫畫、互相猜題的注音互動遊戲",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#1e272e",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
