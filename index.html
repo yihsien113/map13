@@ -437,11 +437,31 @@
         grid-template-rows: repeat(3, 1fr);
       }
       .guess-option-btn { font-size: 32px; }
-      .bottom-bar { height: 260px; }
+      .bottom-bar { 
+        height: auto; 
+        min-height: 220px;
+        padding: 12px 10px;
+      }
 
-      .color-dot { width: 34px; height: 34px; }
+      /* 讓 10 個顏色在手機上自動排成 2 排（每排 5 個），免滑動就能全部顯示 */
+      .color-row {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 8px;
+        justify-items: center;
+        overflow-x: visible;
+        padding: 6px 4px;
+      }
+
+      .color-dot { width: 36px; height: 36px; }
+      .tool-row { justify-content: space-between; }
       .tool-chip { font-size: 15px; padding: 6px 10px; }
-      .ok-draw-btn { min-width: 105px; font-size: 24px; }
+      .ok-draw-btn { 
+        min-width: 88px; 
+        height: 140px; 
+        font-size: 24px; 
+        border-radius: 18px;
+      }
       .phase-banner { font-size: 16px; }
     }
   </style>
@@ -664,7 +684,81 @@
       { word: '足球', emoji: '⚽', ruby: '<ruby>足<rt>ㄗㄨˊ</rt></ruby><ruby>球<rt>ㄑㄧㄡˊ</rt></ruby>' },
       { word: '籃球', emoji: '🏀', ruby: '<ruby>籃<rt>ㄌㄢˊ</rt></ruby><ruby>球<rt>ㄑㄧㄡˊ</rt></ruby>' },
       { word: '機器人', emoji: '🤖', ruby: '<ruby>機<rt>ㄐㄧ</rt></ruby><ruby>器<rt>ㄑㄧˋ</rt></ruby><ruby>人<rt>ㄖㄣˊ</rt></ruby>' },
-      { word: '幽靈', emoji: '👻', ruby: '<ruby>幽<rt>ㄧㄡ</rt></ruby><ruby>靈<rt>ㄌㄧㄥˊ</rt></ruby>' }
+      { word: '幽靈', emoji: '👻', ruby: '<ruby>幽<rt>ㄧㄡ</rt></ruby><ruby>靈<rt>ㄌㄧㄥˊ</rt></ruby>' },
+      // === 新增：食物與點心 (15題) ===
+      { word: '雞蛋', emoji: '🥚', ruby: '<ruby>雞<rt>ㄐㄧ</rt></ruby><ruby>蛋<rt>ㄉㄢˋ</rt></ruby>' },
+      { word: '起司', emoji: '🧀', ruby: '<ruby>起<rt>ㄑㄧˇ</rt></ruby><ruby>司<rt>ㄙ</rt></ruby>' },
+      { word: '熱狗', emoji: '🌭', ruby: '<ruby>熱<rt>ㄖㄜˋ</rt></ruby><ruby>狗<rt>ㄍㄡˇ</rt></ruby>' },
+      { word: '水餃', emoji: '🥟', ruby: '<ruby>水<rt>ㄕㄨㄟˇ</rt></ruby><ruby>餃<rt>ㄐㄧㄠˇ</rt></ruby>' },
+      { word: '壽司', emoji: '🍣', ruby: '<ruby>壽<rt>ㄕㄡˋ</rt></ruby><ruby>司<rt>ㄙ</rt></ruby>' },
+      { word: '巧克力', emoji: '🍫', ruby: '<ruby>巧<rt>ㄑㄧㄠˇ</rt></ruby><ruby>克<rt>ㄎㄜˋ</rt></ruby><ruby>力<rt>ㄌㄧˋ</rt></ruby>' },
+      { word: '糖果', emoji: '🍬', ruby: '<ruby>糖<rt>ㄊㄤˊ</rt></ruby><ruby>果<rt>ㄍㄨㄛˇ</rt></ruby>' },
+      { word: '爆米花', emoji: '🍿', ruby: '<ruby>爆<rt>ㄅㄠˋ</rt></ruby><ruby>米<rt>ㄇㄧˇ</rt></ruby><ruby>花<rt>ㄏㄨㄚ</rt></ruby>' },
+      { word: '牛奶', emoji: '🍼', ruby: '<ruby>牛<rt>ㄋㄧㄡˊ</rt></ruby><ruby>奶<rt>ㄋㄞˇ</rt></ruby>' },
+      { word: '果汁', emoji: '🧃', ruby: '<ruby>果<rt>ㄍㄨㄛˇ</rt></ruby><ruby>汁<rt>ㄓ</rt></ruby>' },
+      { word: '水蜜桃', emoji: '🍑', ruby: '<ruby>水<rt>ㄕㄨㄟˇ</rt></ruby><ruby>蜜<rt>ㄇㄧˋ</rt></ruby><ruby>桃<rt>ㄊㄠˊ</rt></ruby>' },
+      { word: '檸檬', emoji: '🍋', ruby: '<ruby>檸<rt>ㄋㄧㄥˊ</rt></ruby><ruby>檬<rt>ㄇㄥˊ</rt></ruby>' },
+      { word: '酪梨', emoji: '🥑', ruby: '<ruby>酪<rt>ㄌㄨㄛˋ</rt></ruby><ruby>梨<rt>ㄌㄧˊ</rt></ruby>' },
+      { word: '茄子', emoji: '🍆', ruby: '<ruby>茄<rt>ㄑㄧㄝˊ</rt></ruby><ruby>子<rt>˙ㄗ</rt></ruby>' },
+      { word: '花生', emoji: '🥜', ruby: '<ruby>花<rt>ㄏㄨㄚ</rt></ruby><ruby>生<rt>ㄕㄥ</rt></ruby>' },
+
+      // === 新增：動物與海洋生物 (20題) ===
+      { word: '熊貓', emoji: '🐼', ruby: '<ruby>熊<rt>ㄒㄩㄥˊ</rt></ruby><ruby>貓<rt>ㄇㄠ</rt></ruby>' },
+      { word: '無尾熊', emoji: '🐨', ruby: '<ruby>無<rt>ㄨˊ</rt></ruby><ruby>尾<rt>ㄨㄟˇ</rt></ruby><ruby>熊<rt>ㄒㄩㄥˊ</rt></ruby>' },
+      { word: '長頸鹿', emoji: '🦒', ruby: '<ruby>長<rt>ㄔㄤˊ</rt></ruby><ruby>頸<rt>ㄐㄧㄥˇ</rt></ruby><ruby>鹿<rt>ㄌㄨˋ</rt></ruby>' },
+      { word: '猴子', emoji: '🐵', ruby: '<ruby>猴<rt>ㄏㄡˊ</rt></ruby><ruby>子<rt>˙ㄗ</rt></ruby>' },
+      { word: '老鼠', emoji: '🐭', ruby: '<ruby>老<rt>ㄌㄠˇ</rt></ruby><ruby>鼠<rt>ㄕㄨˇ</rt></ruby>' },
+      { word: '狐狸', emoji: '🦊', ruby: '<ruby>狐<rt>ㄏㄨˊ</rt></ruby><ruby>狸<rt>ㄌㄧˊ</rt></ruby>' },
+      { word: '刺蝟', emoji: '🦔', ruby: '<ruby>刺<rt>ㄘˋ</rt></ruby><ruby>蝟<rt>ㄨㄟˋ</rt></ruby>' },
+      { word: '蝙蝠', emoji: '🦇', ruby: '<ruby>蝙<rt>ㄅㄧㄢ</rt></ruby><ruby>蝠<rt>ㄈㄨˊ</rt></ruby>' },
+      { word: '貓頭鷹', emoji: '🦉', ruby: '<ruby>貓<rt>ㄇㄠ</rt></ruby><ruby>頭<rt>ㄊㄡˊ</rt></ruby><ruby>鷹<rt>ㄧㄥ</rt></ruby>' },
+      { word: '鴨子', emoji: '🦆', ruby: '<ruby>鴨<rt>ㄧㄚ</rt></ruby><ruby>子<rt>˙ㄗ</rt></ruby>' },
+      { word: '天鵝', emoji: '🦢', ruby: '<ruby>天<rt>ㄊㄧㄢ</rt></ruby><ruby>鵝<rt>ㄜˊ</rt></ruby>' },
+      { word: '孔雀', emoji: '🦚', ruby: '<ruby>孔<rt>ㄎㄨㄥˇ</rt></ruby><ruby>雀<rt>ㄑㄩㄝˋ</rt></ruby>' },
+      { word: '海豚', emoji: '🐬', ruby: '<ruby>海<rt>ㄏㄞˇ</rt></ruby><ruby>豚<rt>ㄊㄨㄣˊ</rt></ruby>' },
+      { word: '鯊魚', emoji: '🦈', ruby: '<ruby>鯊<rt>ㄕㄚ</rt></ruby><ruby>魚<rt>ㄩˊ</rt></ruby>' },
+      { word: '蝦子', emoji: '🦐', ruby: '<ruby>蝦<rt>ㄒㄧㄚ</rt></ruby><ruby>子<rt>˙ㄗ</rt></ruby>' },
+      { word: '水母', emoji: '🪼', ruby: '<ruby>水<rt>ㄕㄨㄟˇ</rt></ruby><ruby>母<rt>ㄇㄨˇ</rt></ruby>' },
+      { word: '海星', emoji: '⭐', ruby: '<ruby>海<rt>ㄏㄞˇ</rt></ruby><ruby>星<rt>ㄒㄧㄥ</rt></ruby>' },
+      { word: '蜘蛛', emoji: '🕷️', ruby: '<ruby>蜘<rt>ㄓ</rt></ruby><ruby>蛛<rt>ㄓㄨ</rt></ruby>' },
+      { word: '螞蟻', emoji: '🐜', ruby: '<ruby>螞<rt>ㄇㄚˇ</rt></ruby><ruby>蟻<rt>ㄧˇ</rt></ruby>' },
+      { word: '鱷魚', emoji: '🐊', ruby: '<ruby>鱷<rt>ㄜˋ</rt></ruby><ruby>魚<rt>ㄩˊ</rt></ruby>' },
+      { word: '筷子', emoji: '🥢', ruby: '<ruby>筷<rt>ㄎㄨㄞˋ</rt></ruby><ruby>子<rt>˙ㄗ</rt></ruby>' },
+      { word: '奶瓶', emoji: '🍼', ruby: '<ruby>奶<rt>ㄋㄞˇ</rt></ruby><ruby>瓶<rt>ㄆㄧㄥˊ</rt></ruby>' },
+      { word: '馬桶', emoji: '🚽', ruby: '<ruby>馬<rt>ㄇㄚˇ</rt></ruby><ruby>桶<rt>ㄊㄨㄥˇ</rt></ruby>' },
+      { word: '浴缸', emoji: '🛁', ruby: '<ruby>浴<rt>ㄩˋ</rt></ruby><ruby>缸<rt>ㄍㄤ</rt></ruby>' },
+      { word: '扇子', emoji: '🪭', ruby: '<ruby>扇<rt>ㄕㄢˋ</rt></ruby><ruby>子<rt>ㄗ˙</rt></ruby>' },
+      { word: '電視', emoji: '📺', ruby: '<ruby>電<rt>ㄉㄧㄢˋ</rt></ruby><ruby>視<rt>ㄕˋ</rt></ruby>' },
+      { word: '手機', emoji: '📱', ruby: '<ruby>手<rt>ㄕㄡˇ</rt></ruby><ruby>機<rt>ㄐㄧ</rt></ruby>' },
+      { word: '相機', emoji: '📷', ruby: '<ruby>相<rt>ㄒㄧㄤˋ</rt></ruby><ruby>機<rt>ㄐㄧ</rt></ruby>' },
+      { word: '燈泡', emoji: '💡', ruby: '<ruby>燈<rt>ㄉㄥ</rt></ruby><ruby>泡<rt>ㄆㄠˋ</rt></ruby>' },
+      { word: '手電筒', emoji: '🔦', ruby: '<ruby>手<rt>ㄕㄡˇ</rt></ruby><ruby>電<rt>ㄉㄧㄢˋ</rt></ruby><ruby>筒<rt>ㄊㄨㄥˇ</rt></ruby>' },
+      { word: '書本', emoji: '📖', ruby: '<ruby>書<rt>ㄕㄨ</rt></ruby><ruby>本<rt>ㄅㄣˇ</rt></ruby>' },
+      { word: '書包', emoji: '🎒', ruby: '<ruby>書<rt>ㄕㄨ</rt></ruby><ruby>包<rt>ㄅㄠ</rt></ruby>' },
+      { word: '手套', emoji: '🧤', ruby: '<ruby>手<rt>ㄕㄡˇ</rt></ruby><ruby>套<rt>ㄊㄠˋ</rt></ruby>' },
+      { word: '圍巾', emoji: '🧣', ruby: '<ruby>圍<rt>ㄨㄟˊ</rt></ruby><ruby>巾<rt>ㄐㄧㄣ</rt></ruby>' },
+      { word: '褲子', emoji: '👖', ruby: '<ruby>褲<rt>ㄎㄨˋ</rt></ruby><ruby>子<rt>˙ㄗ</rt></ruby>' },
+      { word: '裙子', emoji: '👗', ruby: '<ruby>裙<rt>ㄑㄩㄣˊ</rt></ruby><ruby>子<rt>˙ㄗ</rt></ruby>' },
+      { word: '戒指', emoji: '💍', ruby: '<ruby>戒<rt>ㄐㄧㄝˋ</rt></ruby><ruby>指<rt>ㄓˇ</rt></ruby>' },
+      { word: '梳子', emoji: '🪮', ruby: '<ruby>梳<rt>ㄕㄨ</rt></ruby><ruby>子<rt>˙ㄗ</rt></ruby>' },
+      { word: '鏡子', emoji: '🪞', ruby: '<ruby>鏡<rt>ㄐㄧㄥˋ</rt></ruby><ruby>子<rt>˙ㄗ</rt></ruby>' },
+
+      // === 新增：交通、自然與玩具 (15題) ===
+      { word: '救護車', emoji: '🚑', ruby: '<ruby>救<rt>ㄐㄧㄡˋ</rt></ruby><ruby>護<rt>ㄏㄨˋ</rt></ruby><ruby>車<rt>ㄔㄜ</rt></ruby>' },
+      { word: '公車', emoji: '🚌', ruby: '<ruby>公<rt>ㄍㄨㄥ</rt></ruby><ruby>車<rt>ㄔㄜ</rt></ruby>' },
+      { word: '直升機', emoji: '🚁', ruby: '<ruby>直<rt>ㄓˊ</rt></ruby><ruby>升<rt>ㄕㄥ</rt></ruby><ruby>機<rt>ㄐㄧ</rt></ruby>' },
+      { word: '氣球', emoji: '🎈', ruby: '<ruby>氣<rt>ㄑㄧˋ</rt></ruby><ruby>球<rt>ㄑㄧㄡˊ</rt></ruby>' },
+      { word: '紅綠燈', emoji: '🚦', ruby: '<ruby>紅<rt>ㄏㄨㄥˊ</rt></ruby><ruby>綠<rt>ㄌㄩˋ</rt></ruby><ruby>燈<rt>ㄉㄥ</rt></ruby>' },
+      { word: '帳篷', emoji: '⛺', ruby: '<ruby>帳<rt>ㄓㄤˋ</rt></ruby><ruby>篷<rt>ㄆㄥˊ</rt></ruby>' },
+      { word: '城堡', emoji: '🏰', ruby: '<ruby>城<rt>ㄔㄥˊ</rt></ruby><ruby>堡<rt>ㄅㄠˇ</rt></ruby>' },
+      { word: '火山', emoji: '🌋', ruby: '<ruby>火<rt>ㄏㄨㄛˇ</rt></ruby><ruby>山<rt>ㄕㄢ</rt></ruby>' },
+      { word: '風箏', emoji: '🪁', ruby: '<ruby>風<rt>ㄈㄥ</rt></ruby><ruby>箏<rt>ㄓㄥ</rt></ruby>' },
+      { word: '溜滑梯', emoji: '🛝', ruby: '<ruby>溜<rt>ㄌㄧㄡ</rt></ruby><ruby>滑<rt>ㄏㄨㄚˊ</rt></ruby><ruby>梯<rt>ㄊㄧ</rt></ruby>' },
+      { word: '摩天輪', emoji: '🎡', ruby: '<ruby>摩<rt>ㄇㄛˊ</rt></ruby><ruby>天<rt>ㄊㄧㄢ</rt></ruby><ruby>輪<rt>ㄌㄨㄣˊ</rt></ruby>' },
+      { word: '小鼓', emoji: '🥁', ruby: '<ruby>小<rt>ㄒㄧㄠˇ</rt></ruby><ruby>鼓<rt>ㄍㄨˇ</rt></ruby>' },
+      { word: '鋼琴', emoji: '🎹', ruby: '<ruby>鋼<rt>ㄍㄤ</rt></ruby><ruby>琴<rt>ㄑㄧㄣˊ</rt></ruby>' },
+      { word: '鑽石', emoji: '💎', ruby: '<ruby>鑽<rt>ㄗㄨㄢˋ</rt></ruby><ruby>石<rt>ㄕˊ</rt></ruby>' },
+      { word: '棒球', emoji: '⚾', ruby: '<ruby>棒<rt>ㄅㄤˋ</rt></ruby><ruby>球<rt>ㄑㄧㄡˊ</rt></ruby>' } 
     ];
 
     const COLORS = [

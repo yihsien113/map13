@@ -1,6 +1,7 @@
 // Version: 1.0
 // 需要更新時修改下方版本字串即可自動清除舊快取
-const CACHE_NAME = 'draw-and-guess-pwa-v1.1';
+//更新項目:新增題目.修復手機畫筆顏色bug
+const CACHE_NAME = 'draw-and-guess-pwa-v1.2';
 
 // 獨立遊戲核心檔案清單
 const CORE_ASSETS = [
